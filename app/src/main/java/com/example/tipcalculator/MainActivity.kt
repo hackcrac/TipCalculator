@@ -3,6 +3,7 @@ package com.example.tipcalculator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.VisibleForTesting
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -20,7 +21,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Money
 import androidx.compose.material.icons.filled.Percent
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -33,12 +33,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tipcalculator.ui.theme.TipCalculatorTheme
@@ -108,6 +107,7 @@ fun TipTimeLayout() {
             modifier = Modifier.padding(bottom = 32.dp)
         )
         Text(
+            textAlign = TextAlign.Center,
             text = stringResource(id = R.string.tip_amount, tip),
             style = MaterialTheme.typography.displaySmall
         )
@@ -156,7 +156,8 @@ fun RoundUpRow(
     }
 }
 
-private fun calculateTip(amount: Double, percent: Double = 15.00,isChecked:Boolean): String {
+@VisibleForTesting
+internal fun calculateTip(amount: Double, percent: Double = 15.00,isChecked:Boolean): String {
     var tip = amount * percent / 100
     if(isChecked){
         tip=kotlin.math.ceil(tip)
